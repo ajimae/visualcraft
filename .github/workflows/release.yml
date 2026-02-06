@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "package.json"
+
+jobs:
+  test:
+    uses: ./.github/workflows/qa.yml
+
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: |
+          bash setup.sh
+      - run: pnpm install --frozen-lockfile
+      - name: Get version
+        id: get_version
+        run: |
+          echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: v${{ steps.get_version.outputs.PACKAGE_VERSION }}
+          tag_name: v${{ steps.get_version.outputs.PACKAGE_VERSION }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

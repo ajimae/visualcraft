@@ -1,0 +1,84 @@
+{
+  "name": "visualcraft",
+  "version": "0.0.0-alpha.1",
+  "description": "⚡ Craft beautiful PDFs from HTML using optimized Chrome pool",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "visualcraft": "./dist/bin/visualcraft.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "pnpm run build:lib && pnpm run build:cli",
+    "build:lib": "tsup",
+    "build:cli": "tsup bin/visualcraft.ts --format cjs --no-splitting --external playwright --external playwright-core --external chromium-bidi --external ../src/index.js --out-dir dist/bin",
+    "build:watch": "tsup --watch",
+    "dev": "tsx watch examples/basic.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src bin tests --ext .ts",
+    "lint:fix": "eslint src bin tests --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"bin/**/*.ts\" \"tests/**/*.ts\" \"examples/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"bin/**/*.ts\" \"tests/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build && pnpm test && pnpm lint",
+    "example:basic": "tsx examples/basic.ts",
+    "example:advanced": "tsx examples/advanced.ts",
+    "example:invoice": "tsx examples/invoice.ts",
+    "postinstall": "playwright install chromium"
+  },
+  "keywords": [
+    "pdf",
+    "html-to-pdf",
+    "pdf-generation",
+    "playwright",
+    "chrome",
+    "document",
+    "cli",
+    "typescript"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajimae/visualcraft"
+  },
+  "bugs": {
+    "url": "https://github.com/ajimae/visualcraft/issues"
+  },
+  "homepage": "https://github.com/ajimae/visualcraft#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "playwright": "1.50.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitest/coverage-v8": "^1.1.0",
+    "chromium-bidi": "^13.1.0",
+    "eslint": "^8.56.0",
+    "playwright": "1.50.0",
+    "prettier": "^3.1.1",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  }
+}

@@ -1,0 +1,359 @@
+htmll
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice 00891049</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.5;
+      color: #1f2937;
+      background: #ffffff;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    .container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: #ffffff;
+    }
+
+    /* Header Section - Gray Box */
+    .header-box {
+      background-color: #f3f4f6;
+      padding: 40px 50px;
+      margin-bottom: 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-left {
+      flex: 1;
+    }
+
+    .invoice-title {
+      font-size: 48px;
+      font-weight: 300;
+      color: #1f2937;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+
+    .billed-to-section {
+      margin-top: 20px;
+    }
+
+    .billed-to-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .billed-to-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .billed-to-address {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .invoice-number {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    .invoice-number-value {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .date-info {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .date-label {
+      color: #6b7280;
+    }
+
+    .date-value {
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    /* Service Section */
+    .service-section {
+      padding: 30px 50px;
+    }
+
+    .service-heading {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .service-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0;
+    }
+
+    .service-table thead {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .service-table th {
+      text-align: left;
+      padding: 12px 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .service-table th.qty,
+    .service-table th.rate,
+    .service-table th.total {
+      text-align: right;
+    }
+
+    .service-table td {
+      padding: 12px 0;
+      font-size: 14px;
+      color: #1f2937;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .service-table td.qty,
+    .service-table td.rate,
+    .service-table td.total {
+      text-align: right;
+    }
+
+    .service-name {
+      font-weight: 500;
+    }
+
+    /* Footer Section */
+    .footer {
+      padding: 30px 50px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left {
+      flex: 1;
+    }
+
+    .issuer-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .issuer-email {
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .total-box {
+      background-color: #f3f4f6;
+      padding: 20px 30px;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+
+    .breakdown {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #4b5563;
+      margin-bottom: 8px;
+    }
+
+    .breakdown-label {
+      color: #4b5563;
+    }
+
+    .breakdown-value {
+      font-weight: 500;
+      color: #1f2937;
+    }
+
+    .total-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .total-amount {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .header-box,
+      .total-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-color: #f3f4f6 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header Gray Box -->
+    <div class="header-box">
+      <div class="header-content">
+        <div class="header-left">
+          <h1 class="invoice-title">Invoice</h1>
+          <div class="billed-to-section">
+            <div class="billed-to-label">Billed To:</div>
+            <div class="billed-to-name">Client name</div>
+            <div class="billed-to-address">
+              Street address<br>
+              City, State Zip code
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="invoice-number">
+            Invoice No. <span class="invoice-number-value">#00891049</span>
+          </div>
+          <div class="date-info">
+            <span class="date-label">Email</span> <span class="date-value">company.name@company.com</span>
+          </div>
+          <div class="date-info">
+            <span class="date-label">Issued by</span> <span class="date-value">Invoizr</span>
+          </div>
+          <div class="date-info">
+            <span class="date-label">Term</span> <span class="date-value">Net 30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Section -->
+    <div class="service-section">
+      <div class="service-heading">Service</div>
+      <table class="service-table">
+        <thead>
+          <tr>
+            <th style="width: 50%;">Service</th>
+            <th class="qty" style="width: 15%;">Qty</th>
+            <th class="rate" style="width: 17.5%;">Rate</th>
+            <th class="total" style="width: 17.5%;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service-name">Product or service</td>
+            <td class="qty">2</td>
+            <td class="rate">$30.00</td>
+            <td class="total">$60.00</td>
+          </tr>
+          <tr>
+            <td class="service-name">Product or service</td>
+            <td class="qty">5</td>
+            <td class="rate">$0.58</td>
+            <td class="total">$2.90</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-left">
+        <div class="issuer-name">Message</div>
+        <div class="issuer-email">Thank you for your purchase. Please return this invoice with payment.</div>
+      </div>
+      <div class="footer-right">
+        <div class="total-box">
+          <!-- Breakdown -->
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <span class="breakdown-label">Subtotal:</span>
+              <span class="breakdown-value">$62.90</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Shipping:</span>
+              <span class="breakdown-value">+$2.99</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Sales tax :</span>
+              <span class="breakdown-value">
+                +$2.39
+              </span>
+            </div>
+          </div>
+          <!-- Total -->
+          <div class="total-label">Total (USD)</div>
+          <div class="total-amount">$68.28</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
