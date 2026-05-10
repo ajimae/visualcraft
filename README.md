@@ -9,13 +9,21 @@
 - 🔧 **Simple API** - No Chrome configuration needed
 - ⚡ **Production ready** - Battle-tested patterns
 - 📦 **TypeScript** - Full type safety
-- 🎯 **Zero dependencies** - Only peer dep on Playwright
+- 🎯 **Zero dependencies** - Only peer dep on `playwright-core`
 
 ## Installation
 
 ```bash
-npm install visualcraft playwright
+npm install visualcraft playwright-core
 ```
+
+Then install the Chromium browser binary (one-time step):
+
+```bash
+npx playwright install chromium
+```
+
+> If you already manage your own Chromium binary (e.g. in Docker or CI), skip the above and pass `executablePath` to `PDFGenerator` or `generatePDF` instead.
 
 ## Quick Start
 
@@ -135,15 +143,5 @@ See the [examples](./examples) directory for more use cases.
 
 ## License
 
-MIT
+[MIT](LICENSE)
 
-## Need More Features?
-
-<!-- Check out our [managed API service](https://yourservice.com) for:
-
-- 📄 Pre-built invoice/receipt/certificate templates
-- ☁️ Cloud storage and CDN delivery
-- 🎨 Visual template editor
-- 📊 Usage analytics dashboard
-- 🔗 Webhook notifications
-- 💳 No infrastructure management -->

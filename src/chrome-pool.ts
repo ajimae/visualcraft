@@ -1,5 +1,5 @@
-import { chromium } from 'playwright';
-import type { Browser, BrowserContext, Page } from 'playwright';
+import { chromium } from 'playwright-core';
+import type { Browser, BrowserContext, Page } from 'playwright-core';
 import type { Ilogger, PoolOptions } from './types';
 import { logger } from './utils';
 
@@ -50,8 +50,7 @@ export class ChromePool {
       '--disable-webgl2',
     ];
 
-    // merge logger
-    this.logger = Object.assign(logger, options.logger) as Ilogger;
+    this.logger = Object.assign({}, logger, options.logger) as Ilogger;
     this.onInitialize =
       options.onInitialize ??
       (() => {

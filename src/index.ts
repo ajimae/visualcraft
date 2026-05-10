@@ -3,7 +3,7 @@ export { ChromePool } from './chrome-pool';
 export type { PDFOptions, GeneratorOptions, PoolOptions, Ilogger } from './types';
 export * from './utils';
 
-import { chromium } from 'playwright';
+import { chromium } from 'playwright-core';
 import type { PDFOptions } from './types';
 
 /**
@@ -24,6 +24,7 @@ export async function generatePDF(options: PDFOptions): Promise<Buffer> {
       '--no-first-run',
       '--no-zygote',
     ],
+    ...(options.executablePath && { executablePath: options.executablePath }),
   });
 
   const context = await browser.newContext({
@@ -57,6 +58,14 @@ export async function generatePDF(options: PDFOptions): Promise<Buffer> {
       displayHeaderFooter: options.displayHeaderFooter || false,
       headerTemplate: options.headerTemplate || '',
       footerTemplate: options.footerTemplate || '',
+      preferCSSPageSize: options.preferCSSPageSize || false,
+      scale: options.scale || 1,
+      height: options.height,
+      width: options.width,
+      outline: options.outline,
+      pageRanges: options.pageRanges,
+      path: options.path,
+      tagged: options.tagged,
     });
 
     return pdf;

@@ -25,6 +25,7 @@ export interface PDFOptions {
   scale?: number;
 
   // Advanced
+  executablePath?: string;
   timeout?: number;
   waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
   height?: string | number;
