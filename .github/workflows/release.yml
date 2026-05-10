@@ -7,6 +7,10 @@ on:
     paths:
       - "package.json"
 
+permissions:
+  actions: write
+  contents: write
+
 jobs:
   test:
     uses: ./.github/workflows/qa.yml
@@ -36,4 +40,4 @@ jobs:
           tag_name: v${{ steps.get_version.outputs.PACKAGE_VERSION }}
           generate_release_notes: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
