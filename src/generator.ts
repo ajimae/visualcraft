@@ -1,5 +1,5 @@
-import { chromium } from 'playwright';
-import type { Page } from 'playwright';
+import { chromium } from 'playwright-core';
+import type { Page } from 'playwright-core';
 import { ChromePool } from './chrome-pool';
 import type { PDFOptions, GeneratorOptions, Ilogger } from './types';
 import { logger } from './utils';
@@ -7,17 +7,20 @@ import { logger } from './utils';
 export class PDFGenerator {
   private pool: ChromePool | null = null;
   private enablePool: boolean;
+  private executablePath: string | undefined;
   private logger: Ilogger;
 
   constructor(options: GeneratorOptions = {}) {
     this.enablePool = options.enablePool ?? true;
-    this.logger = Object.assign(logger, options.logger) as Ilogger;
+    this.executablePath = options.executablePath;
+    this.logger = Object.assign({}, logger, options.logger) as Ilogger;
 
     if (this.enablePool) {
       this.pool = new ChromePool({
         maxBrowsers: options.maxBrowsers,
         maxPagesPerBrowser: options.maxPagesPerBrowser,
         browserArgs: options.browserArgs,
+        executablePath: options.executablePath,
       });
     }
   }
@@ -30,6 +33,7 @@ export class PDFGenerator {
 
   async generate(options: PDFOptions): Promise<Buffer> {
     const startTime = Date.now();
+    const { html, css, executablePath: _exec, timeout, waitUntil, ...pdfOptions } = options;
 
     let page: Page;
 
@@ -47,48 +51,34 @@ export class PDFGenerator {
           '--disable-webgl',
           '--disable-webgl2',
         ],
+        ...(this.executablePath && { executablePath: this.executablePath }),
       });
       const context = await browser.newContext();
       page = await context.newPage();
     }
 
     try {
-      const html = this.buildHTML(options.html, options.css);
-
-      await page.setContent(html, {
-        waitUntil: options.waitUntil || 'domcontentloaded',
-        timeout: options.timeout || 30000,
+      await page.setContent(this.buildHTML(html, css), {
+        waitUntil: waitUntil || 'domcontentloaded',
+        timeout: timeout || 30000,
       });
 
-      const {
-        format,
-        landscape,
-        margin,
-        printBackground,
-        displayHeaderFooter,
-        headerTemplate,
-        footerTemplate,
-        preferCSSPageSize,
-        scale,
-        ...rest
-      } = options;
-
       const pdf = await page.pdf({
-        format: format || 'A4',
-        landscape: landscape || false,
-        margin: margin || {
-          top: '1cm',
-          bottom: '1cm',
-          left: '1cm',
-          right: '1cm',
-        },
-        printBackground: printBackground ?? true,
-        displayHeaderFooter: displayHeaderFooter || false,
-        headerTemplate: headerTemplate || '',
-        footerTemplate: footerTemplate || '',
-        preferCSSPageSize: preferCSSPageSize || false,
-        scale: scale || 1,
-        ...rest,
+        format: pdfOptions.format || 'A4',
+        landscape: pdfOptions.landscape || false,
+        margin: pdfOptions.margin || { top: '1cm', bottom: '1cm', left: '1cm', right: '1cm' },
+        printBackground: pdfOptions.printBackground ?? true,
+        displayHeaderFooter: pdfOptions.displayHeaderFooter || false,
+        headerTemplate: pdfOptions.headerTemplate || '',
+        footerTemplate: pdfOptions.footerTemplate || '',
+        preferCSSPageSize: pdfOptions.preferCSSPageSize || false,
+        scale: pdfOptions.scale || 1,
+        height: pdfOptions.height,
+        width: pdfOptions.width,
+        outline: pdfOptions.outline,
+        pageRanges: pdfOptions.pageRanges,
+        path: pdfOptions.path,
+        tagged: pdfOptions.tagged,
       });
 
       const duration = Date.now() - startTime;
