@@ -6,7 +6,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
-    "visualcraft": "./dist/bin/visualcraft.js"
+    "visualcraft": "dist/bin/visualcraft.js"
   },
   "exports": {
     ".": {
@@ -54,7 +54,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajimae/visualcraft"
+    "url": "git+https://github.com/ajimae/visualcraft.git"
   },
   "bugs": {
     "url": "https://github.com/ajimae/visualcraft/issues"
